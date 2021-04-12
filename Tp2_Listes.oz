@@ -68,7 +68,71 @@ declare {Tail L}
     else nil
     end
 end
-{Browse {Tail [a b c]}}
+{Browse {Tail [a b c]}} % -> poque no funciona ??
+
+%longuer de une liste 
+declare
+fun {Length L Acc}
+    case L
+    of nil then Acc
+    [] _|T then {Length T Acc+1}
+    end
+end
+
+{Browse {Length [r a p h] 0}}
+{Browse {Length [[b o r] i s] 0}}
+
+%append un element 
+declare 
+fun {Append L M}
+    case L
+    of nil then M
+    else
+        case M
+        of nil then L
+        [] H|T then H|{Append T M}
+        end
+    end
+end 
+
+{Browse {Append [b [o r]] [i s]}}
+
+%4. Pattern matching. Le pattern matching permet de comparer une valeur avec un pattern, c’est-à-dire un patron
+%ou une forme. Cette technique permet de décomposer un traitement par cas de façon très concise et lisible. Par
+%exemple, l’instruction
+%----------------------------------------
+%Ecrivez une fonction qui prend un argument, et renvoie empty si c’est la liste vide, nonEmpty si c’est une
+%liste non-vide, et other si ce n’est pas une liste.
+
+declare {EmptyL L}
+    case L
+    of nil then empty
+    [] H|T then nonEmpty
+    else other
+    end
+end
+
+{Browse {EmptyL [1 2 3]}} %-> error ligne 8 porqoui ???
+
+%_________________________________
+%5. Sous-séquences dans des listes.
+%___________________________________
+
+declare {Take Xs N}
+    if N == 0 then nil
+    else
+        case Xs
+        of nil then nil
+        [] H|T then 
+            if N == 1 then H 
+            else [H {Take T N-1}]
+            end
+        end
+    end
+end
+
+{Browse {Take [r a p h] 2}}
+
 
 declare 
 fun {Sum N}
